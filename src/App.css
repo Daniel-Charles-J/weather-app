@@ -16,21 +16,26 @@
   justify-content: space-around;
   margin-left: 30px;
   margin-right: 30px;
-  border: 1px solid black;
   height: 80px;
+  background: rgb(0,0,0,0.3);
 }
 .inputBox{
-  border: 1px solid black;
+  background: rgb(0,0,0,0.3);
   margin-left: 30px;
   width: 200px;
   height: 58px;
   margin-top: 8px;
   border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  text-align: center;
 }
 .degree{
-  border: 1px solid black;
   margin-right: 30px;
   width: 130px;
+  background-color: aliceblue;
+  color: black;
+  font-weight: 800;
 }
 .image{
   height: 40px;

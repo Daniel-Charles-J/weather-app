@@ -11,25 +11,57 @@ import { weatherData } from "./weather";
 
 function App() {
 
-  const [weather, setWeather] = useState();
+  const [weather, setWeather] = useState({});
   const [units, setUnits] = useState("metric");
+  const [city, setCity] = useState("chennai");
+  const [unitForSpeed, setunitForSpeed] = useState(units);
+  const [speedUnit, setSpeedUnit] = useState("m/s");
+  const [bg, setBg] = useState(hotBg);
+  const unit = units ==="metric" ? "C" : "F";
+ 
+
+  const handleClick = (e)=>{
+      e.preventDefault();
+      let innerText = (e.currentTarget.innerText.slice(1));
+  
+      let degree = innerText === "C" ? "°F" :"°C";
+      e.currentTarget.innerText = degree;
+      let state = degree === "°F" ? "imperial" : "metric";
+      setUnits(state);
+      console.log(units);
+      let value = units ==="metric" ? "m/s" : "m/h";
+      setSpeedUnit(value)
+  }
+
+  const enterKeyPressed = (e) => {
+    if (e.keyCode === 13) {
+      setCity(e.currentTarget.value);
+      e.currentTarget.blur();
+    }
+  };
+
+  
   useEffect(() =>{
-     
       const weatherFetchData = async () =>{
-      const data = await weatherData("salem");
+      const data = await weatherData(city,units);
       console.log(data)
-      setWeather(data.data);
+      setWeather(data);
+
+      const threshold = units === "metric" ? 20 : 60;
+      if (data.temp <= threshold) setBg(coldBg);
+      else setBg(hotBg);
     }
     weatherFetchData();
-  },[])
+  },[units,city])
 
   return (
-    <div style={{backgroundImage : `url(${coldBg})`}} className="App">
+    
+    <div className="app" style={{ backgroundImage: `url(${bg})` }}>
       <div className='container'>
 
         <div className='upper-container'>
-          <input className='inputBox' type="text" placeholder='Enter city name'></input>
-          <button className='degree'>&deg;F</button>
+          <input className='inputBox'  onKeyDown={enterKeyPressed} type="text" placeholder='Enter city name'></input>
+          <button onClick={handleClick} className='degree'>&deg;C</button>
         </div>
 
         <div className='middle-container'>
@@ -39,46 +71,46 @@ function App() {
             <p>{weather.description}</p>
           </div>
           <div className='temp'>
-            <h1> {weather.temp.toFixed()}&deg;{units ==="metric" ? "C" : "F"} </h1>
+            <h1> {weather.temp}&deg;{unit} </h1>
           </div>
         </div>
 
         <div className='lower-container'>
           <button>
             <div className ="small">
-              <FaArrowDown/><small>min</small>
+              <FaArrowDown/><small>max</small>
             </div>
-            <h1>32&deg;</h1>
+            <h1>{weather.temp_max}&deg;{unit}</h1>
           </button>
           <button>
             <div className ="small">
-            <FaArrowUp /><small>max</small>
+            <FaArrowUp /><small>min</small>
             </div>
-            <h1>32&deg;</h1>
+            <h1>{weather.temp_min}&deg;{unit}</h1>
           </button>
           <button>
             <div className ="small">
             <BiHappy /><small>feels like</small>
             </div>
-            <h1>32&deg;</h1>
+            <h1>{weather.feels_like}&deg;{unit}</h1>
           </button>
           <button>
             <div className ="small">
             <MdCompress /><small>pressure</small>
             </div>
-            <h1>32&deg;</h1>
+            <h1>{weather.pressure}hpa</h1>
           </button>
           <button>
             <div className ="small">
             <MdOutlineWaterDrop /><small>humidity</small>
             </div>
-            <h1>32&deg;</h1>
+            <h1>{weather.humidity}%</h1>
           </button>
           <button>
             <div className ="small">
             <FaWind /><small>wind speed</small>
             </div>
-            <h1>32&deg;</h1>
+            <h1>{weather.speed}{speedUnit}</h1>
           </button>
         </div>
       </div>

@@ -5,7 +5,7 @@ const weatherData = async(city, units = "metric") =>{
     const makeIconURL = (iconId) => `https://openweathermap.org/img/wn/${iconId}@2x.png`;
 
     const data = await fetch(URL).then((res) => res.json()).catch((error) => console.log(error));
-    console.log(data)
+    // console.log(data)
     
     const{
         weather,
@@ -14,7 +14,7 @@ const weatherData = async(city, units = "metric") =>{
         sys : {country}, 
         name
     } = data
-    console.log(weather,speed,country,feels_like)
+    // console.log(weather,speed,country,feels_like)
     const {description, icon} = weather[0];
 
     return{
