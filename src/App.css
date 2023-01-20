@@ -62,7 +62,7 @@
   margin: 20px;
   display: grid;
   grid-template-columns: repeat(2,1fr);
-  padding: 0px 90px 0px 90px;
+  padding: 0px 50px 0px 50px;
 }
 button{
   margin: 10px;
