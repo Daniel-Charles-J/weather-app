@@ -23,13 +23,11 @@ function App() {
   const handleClick = (e)=>{
       e.preventDefault();
       let innerText = (e.currentTarget.innerText.slice(1));
-  
       let degree = innerText === "C" ? "°F" :"°C";
       e.currentTarget.innerText = degree;
       let state = degree === "°F" ? "imperial" : "metric";
       setUnits(state);
-      console.log(units);
-      let value = units ==="metric" ? "m/s" : "m/h";
+      let value =  degree ==="°C" ? "m/s" : "m/h";
       setSpeedUnit(value)
   }
 
@@ -40,7 +38,6 @@ function App() {
     }
   };
 
-  
   useEffect(() =>{
       const weatherFetchData = async () =>{
       const data = await weatherData(city,units);
